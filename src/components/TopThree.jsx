@@ -10,7 +10,7 @@ const TopThree = () => {
           method: "GET",
           headers: {
             accept: "application/json",
-            "x-cg-demo-api-key": "	CG-i7R7orTnKVnUgPtiYE5WU74V",
+            "x-cg-demo-api-key": `${import.meta.env.VITE_API_KEY}`,
           },
         }
       );

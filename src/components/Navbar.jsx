@@ -1,6 +1,6 @@
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
-import { IoSearch } from "react-icons/io5";
+
 import { useThemeContext } from "../context/themeContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ const Navbar = () => {
             method: "GET",
             headers: {
               accept: "application/json",
-              "x-cg-demo-api-key": "	CG-i7R7orTnKVnUgPtiYE5WU74V",
+              "x-cg-demo-api-key": `${import.meta.env.VITE_API_KEY}`,
             },
           }
         );
@@ -41,7 +41,7 @@ const Navbar = () => {
   }, [searchTerm]);
 
   return (
-    <nav className="py-2 px-2 flex items-center justify-between bg-light-foreground text-dark dark:bg-dark-foreground dark:text-light transition-colors duration-300  shadow-md">
+    <nav className="max-w-screen py-2 px-2 flex items-center justify-between bg-light-foreground text-dark dark:bg-dark-foreground dark:text-light transition-colors duration-300  shadow-md">
       <h1 className="text-lg text-gray-900 dark:text-gray-100">
         Crypto<span>Dash</span>
       </h1>
@@ -53,12 +53,6 @@ const Navbar = () => {
           className="w-[150px] md:w-[200px] lg:w-full border border-gray-300 dark:border-gray-700 rounded-md p-2 ml-4 focus:outline-none focus:ring-2 focus:ring-blue-500 "
           placeholder="Search trending coins..."
         />
-        <div
-          onClick={() => setDarkTheme(!darkTheme)}
-          className=" p-2 rounded-md bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-300"
-        >
-          <IoSearch className="text-gray-900 dark:text-gray-100" />
-        </div>
 
         {loading && (
           <div className="absolute top-12 left-0 w-full bg-white dark:bg-gray-800 shadow-lg rounded-md p-4">
@@ -71,7 +65,6 @@ const Navbar = () => {
               {searchResult.map((coin) => (
                 <Link
                   to={`/${coin.id}`}
-                  state={{ coinData: coin }}
                   onClick={() => {
                     setSearchResult([]);
                     setSearchTerm("");
