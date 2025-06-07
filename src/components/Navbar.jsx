@@ -1,21 +1,22 @@
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
-
 import { useThemeContext } from "../context/themeContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useDebounce from "../hooks/useDebounce";
 const Navbar = () => {
   const { darkTheme, setDarkTheme } = useThemeContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const debouncedSearch = useDebounce(searchTerm);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/search?query=${searchTerm}`,
+          `https://api.coingecko.com/api/v3/search?query=${debouncedSearch}`,
           {
             method: "GET",
             headers: {
@@ -33,12 +34,12 @@ const Navbar = () => {
         setLoading(false);
       }
     };
-    if (searchTerm) {
+    if (debouncedSearch) {
       fetchData();
     } else {
       setSearchResult([]);
     }
-  }, [searchTerm]);
+  }, [debouncedSearch]);
 
   return (
     <nav className="max-w-screen py-2 px-2 flex items-center justify-between bg-light-foreground text-dark dark:bg-dark-foreground dark:text-light transition-colors duration-300  shadow-md">
@@ -65,6 +66,7 @@ const Navbar = () => {
               {searchResult.map((coin) => (
                 <Link
                   to={`/${coin.id}`}
+                  key={coin.id}
                   onClick={() => {
                     setSearchResult([]);
                     setSearchTerm("");
