@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -10,8 +10,8 @@ import {
 } from "recharts";
 
 const Chart = ({ id }) => {
-  const [days, setDays] = React.useState(1);
-  const [data, setData] = React.useState([]);
+  const [days, setDays] = useState(1);
+  const [data, setData] = useState([]);
   console.log(`Chart component for coin with ID: ${id}`);
   const fetchChartData = async () => {
     try {

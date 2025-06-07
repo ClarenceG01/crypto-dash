@@ -43,8 +43,8 @@ const Navbar = () => {
 
   return (
     <nav className="max-w-screen py-2 px-2 flex items-center justify-between bg-light-foreground text-dark dark:bg-dark-foreground dark:text-light transition-colors duration-300  shadow-md">
-      <h1 className="text-lg text-gray-900 dark:text-gray-100">
-        Crypto<span>Dash</span>
+      <h1 className="text-lg text-gray-900 dark:text-gray-100 font-logo">
+        CryptoDash
       </h1>
       <div className="relative w-[150px] md:w-[250px] lg:w-[350px] flex items-center gap-2">
         <input
