@@ -17,7 +17,7 @@ A clean, real-time cryptocurrency dashboard built with modern web technologies, 
 
 *(Replace this with your live demo link or project screenshots)*
 
-- **Live demo**: [Your hosted URL]  
+- **Live demo**: [https://crypto-dash-pied.vercel.app/]  
 - ![Dashboard screenshot](./docs/screenshot.png)
 
 ---
