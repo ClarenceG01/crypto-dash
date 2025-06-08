@@ -1,12 +1,77 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Crypto‑Dash 🚀
 
-Currently, two official plugins are available:
+A clean, real-time cryptocurrency dashboard built with modern web technologies, offering live price updates, historical charts, and portfolio tracking.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Demo](#demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Demo
+
+*(Replace this with your live demo link or project screenshots)*
+
+- **Live demo**: [Your hosted URL]  
+- ![Dashboard screenshot](./docs/screenshot.png)
+
+---
+
+## Features
+
+- **Real-time price updates** for major cryptocurrencies  
+- **Historical price charts** with interactive UI & charts  
+- **Dark & Light mode** for personalized experience  
+- **Responsive design**: mobile, tablet, desktop ready  
+
+
+---
+
+## Tech Stack
+
+- **Frontend**: React + Vite  
+- **Charts**: Recharts  
+- **State Management**: React Context for theme  
+- **API**: CoinGecko  
+- **Styling**: Tailwind CSS  
+
+---
+
+## Prerequisites
+
+Ensure you have installed:
+
+- [Node.js](https://nodejs.org/) v16+  
+- npm v8+ (or yarn v1.22+)  
+- API keys for data provider (CoinGecko)
+
+---
+
+## Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ClarenceG01/crypto-dash.git
+   cd crypto-dash
+2. **Install dependencies**
+   ```bash
+   npm install
+# or yarn install
+
+3. **Configure environment variables**
+   ```bash
+   VITE_API_KEY='your api key from coingecko'
+4. **Run the development server**
+   ```bash
+   npm run dev
+  # or yarn dev
+5. **Open http://localhost:5173 to explore Crypto‑Dash**
+   
+
+
+
