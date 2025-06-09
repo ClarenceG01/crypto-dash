@@ -37,7 +37,12 @@ const TopThree = () => {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data</div>;
+  if (error)
+    return (
+      <div className="text-red-500 text-center">
+        Error fetching data. Please try again later.
+      </div>
+    );
 
   return (
     <div className="pt-2 mx-3 md:pt-4 lg:mx-5 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-5">

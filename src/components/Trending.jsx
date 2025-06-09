@@ -27,15 +27,20 @@ const Trending = () => {
     queryKey: ["trendingCoins"],
     queryFn: fetchTrendingCoins,
     refetchOnWindowFocus: false,
-    refetchInterval: 300000,
+    refetchInterval: 1200000,
   });
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data</div>;
+  if (error)
+    return (
+      <div className="text-red-500 text-center">
+        Error fetching data. Please try again later.
+      </div>
+    );
 
   console.log("Trending Coins:", coins);
   return (
-    <div className="flex flex-col py-2 px-4 mt-3.5 mx-3  lg:mx-5 md:w-1/2 dark:bg-dark-foreground bg-light-foreground rounded-md shadow-sm">
+    <div className="flex flex-col py-2 px-4  w-full lg:w-1/2 dark:bg-dark-foreground bg-light-foreground rounded-md shadow-sm">
       <h1 className="text-2xl font-bold text-gray-900 dark:text-light mb-3 text-center">
         Trending Coins
       </h1>
@@ -61,11 +66,6 @@ const Trending = () => {
           ))}
         </tbody>
       </table>
-      <div className="flex justify-end items-center ">
-        <button className="w-fit mt-2 px-4 py-1.5 dark:bg-dark dark:text-light rounded-md shadow-md border border-light dark:hover:bg-dark/60 hover:bg-light cursor-pointer transition-colors">
-          View All
-        </button>
-      </div>
     </div>
   );
 };

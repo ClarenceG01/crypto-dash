@@ -66,7 +66,8 @@ const SingleCrypto = () => {
       </div>
       <div className="mb-4">
         <p className="text-lg dark:text-light">
-          BTC to USD: 1 Bitcoin equals {USD.format(coin.current_price)}
+          {coin.name} to USD: 1 {coin.name} equals{" "}
+          {USD.format(coin.current_price)}
         </p>
       </div>
       <Chart id={id} />

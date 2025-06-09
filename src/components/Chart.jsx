@@ -12,6 +12,7 @@ import {
 const Chart = ({ id }) => {
   const [days, setDays] = useState(1);
   const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
   console.log(`Chart component for coin with ID: ${id}`);
   const fetchChartData = async () => {
     try {
@@ -34,11 +35,20 @@ const Chart = ({ id }) => {
       setData(priceData);
     } catch (error) {
       console.log(error);
+      setData([]);
+      setError(true);
     }
   };
   useEffect(() => {
     fetchChartData();
   }, [id, days]);
+  if (error) {
+    return (
+      <div className="text-red-500 text-center">
+        Error getting chart data. Please try again later.
+      </div>
+    );
+  }
   return (
     <div>
       <div className="mb-4 flex flex-row items-center justify-center gap-2">
