@@ -13,7 +13,7 @@ const Chart = ({ id }) => {
   const [days, setDays] = useState(1);
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
-  console.log(`Chart component for coin with ID: ${id}`);
+
   const fetchChartData = async () => {
     try {
       const response = await fetch(
@@ -27,7 +27,7 @@ const Chart = ({ id }) => {
         }
       );
       const data = await response.json();
-
+      console.log(data);
       const priceData = data.prices.map((price) => ({
         date: new Date(price[0]).toLocaleDateString(),
         price: price[1],
@@ -88,7 +88,7 @@ const Chart = ({ id }) => {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data}>
           <XAxis dataKey="date" />
-          <YAxis />
+          <YAxis domain={['dataMin', 'dataMax']}/>
           <Tooltip />
           <Legend />
           <Line type="basic" dataKey="price" stroke="#8884d8" dot={false} />
