@@ -40,7 +40,7 @@ const Trending = () => {
       <h1 className="text-xl font-bold text-gray-900 dark:text-light mb-3 text-center">
         Trending Coins
       </h1>
-      <table className="table table-xs md:table-sm w-full md:w-full border border-base-content/5 bg-base-100 dark:bg-dark-foreground mx-auto">
+      <table className="table table-xs md:table-sm w-full md:w-full border border-base-content/5 bg-light-foreground text-dark dark:bg-dark-foreground mx-auto">
         <tbody>
           {coins.slice(0, 5).map((coin) => (
             <tr

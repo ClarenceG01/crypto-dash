@@ -20,13 +20,13 @@ const CoinHolder = ({ data }) => {
             className="size-10"
           />
           <div className="flex flex-col">
-            <span className="uppercase dark:text-light">{data.symbol}</span>
+            <span className="uppercase text-dark font-bold dark:text-light">{data.symbol}</span>
             <span className="text-light-text ">{data.name}</span>
           </div>
         </div>
       </div>
       <div className="flex items-center justify-between">
-        <span className="font-bold text-lg dark:text-light">
+        <span className="font-bold text-dark text-lg dark:text-light">
           {USD.format(data.current_price)}
         </span>
         <Sparkline data={data.sparkline_in_7d.price} />

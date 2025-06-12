@@ -5,7 +5,7 @@ import { IoMdTrendingDown } from "react-icons/io";
 const AllTrending = () => {
   const { state } = useLocation();
   return (
-    <table className="table table-xs md:table-md w-fit md:w-full border border-base-content/5 bg-base-100 dark:bg-dark-foreground mx-auto">
+    <table className="table table-xs md:table-md w-fit md:w-full border border-base-content/5 bg-light-foreground dark:bg-dark-foreground mx-auto">
       <tbody>
         {state.map((coin) => (
           <tr key={coin.item.id}>
@@ -18,7 +18,7 @@ const AllTrending = () => {
             </td>
             <td>
               <div className="flex flex-col w-[100px]">
-                <span className="uppercase font-semibold dark:text-light">
+                <span className="uppercase font-semibold text-dark dark:text-light">
                   {coin.item.symbol}
                 </span>
                 <span className="text-light-text">{coin.item.name}</span>

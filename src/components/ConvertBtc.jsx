@@ -41,7 +41,7 @@ const ConvertBtc = () => {
   };
 
   return (
-    <div className="flex flex-col py-2 px-4 w-full lg:w-1/3 dark:bg-dark-foreground  dark:text-light bg-light-foreground rounded-md shadow-sm">
+    <div className="flex flex-col py-2 px-4 w-full lg:w-1/3 dark:bg-dark-foreground text-dark  dark:text-light bg-light-foreground rounded-md shadow-sm">
       <h1 className="text-xl font-bold text-gray-900 dark:text-light mb-3 text-center">
         Convert Bitcoin
       </h1>
