@@ -1,57 +1,29 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import useChartData from "../hooks/useChartData";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  AreaChart,
+  Area,
+  CartesianGrid,
 } from "recharts";
 
 const Chart = ({ id }) => {
   const [days, setDays] = useState(1);
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
+  const { data, error } = useChartData(id, days);
 
-  const fetchChartData = async () => {
-    try {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`,
-        {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            "x-cg-demo-api-key": `${import.meta.env.VITE_API_KEY}`,
-          },
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      const priceData = data.prices.map((price) => ({
-        date: new Date(price[0]).toLocaleDateString(),
-        price: price[1],
-      }));
-      setData(priceData);
-    } catch (error) {
-      console.log(error);
-      setData([]);
-      setError(true);
-    }
-  };
-  useEffect(() => {
-    fetchChartData();
-  }, [id, days]);
   if (error) {
     return (
-      <div className="text-red-500 text-center">
+      <div className="text-red-500 font-semibold  text-center">
         Error getting chart data. Please try again later.
       </div>
     );
   }
   return (
     <div>
-      <div className="mb-4 flex flex-row items-center justify-center gap-2">
+      <div className="mb-4 flex flex-row items-center justify-center gap-2 duration-300 transition-colors">
         <button
           className={`px-3 py-1.5 mr-2 rounded bg-light-foreground shadow-md hover:bg-light-foreground/70 dark:bg-dark-foreground dark:hover:bg-dark-foreground/70 dark:text-light-foreground cursor-pointer transition ${
             days === 1 ? "border border-amber-300" : ""
@@ -86,13 +58,44 @@ const Chart = ({ id }) => {
         </button>
       </div>
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={data}>
-          <XAxis dataKey="date" />
-          <YAxis domain={['dataMin', 'dataMax']}/>
-          <Tooltip />
-          <Legend />
-          <Line type="basic" dataKey="price" stroke="#8884d8" dot={false} />
-        </LineChart>
+        <AreaChart width={730} height={250} data={data} margin={{}}>
+          <defs>
+            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#219653" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#219653" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <XAxis 
+                dataKey="time"
+                stroke="#6B7280"
+                tickLine={false}
+                axisLine={false}
+             />
+          <YAxis domain={["dataMin", "dataMax"]} />
+          <CartesianGrid
+            strokeDasharray="1 1"
+            stroke="#374151"
+            strokeOpacity={0.5}
+            horizontal={true}
+            vertical={false}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#1F2937",
+              border: "none",
+              borderRadius: "8px",
+            }}
+            labelStyle={{ color: "#F3F4F6" }}
+            itemStyle={{ color: "#D1D5DB" }}
+          />
+          <Area
+            type="monotone"
+            dataKey="price"
+            stroke="#219653"
+            fillOpacity={1}
+            fill="url(#colorPv)"
+          />
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

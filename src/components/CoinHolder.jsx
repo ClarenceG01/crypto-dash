@@ -5,7 +5,6 @@ let USD = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 const CoinHolder = ({ data }) => {
-  console.log(data);
   return (
     <Link
       to={`/${data.id}`}

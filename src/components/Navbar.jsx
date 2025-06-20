@@ -27,9 +27,8 @@ const Navbar = () => {
         );
         const data = await response.json();
         setSearchResult(data.coins);
-        console.log(data.coins);
-      } catch (error) {
-        console.log(error);
+      } catch (error) { 
+        setSearchResult([]);
       } finally {
         setLoading(false);
       }

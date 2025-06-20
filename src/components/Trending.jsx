@@ -1,40 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { IoMdTrendingUp } from "react-icons/io";
 import { IoMdTrendingDown } from "react-icons/io";
 
-const fetchTrendingCoins = async () => {
-  const response = await fetch(
-    "https://api.coingecko.com/api/v3/search/trending",
-    {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": `${import.meta.env.VITE_API_KEY}`,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  const data = await response.json();
-  return data.coins;
-};
-
-const Trending = () => {
-  const {
-    data: coins,
-
-    isLoading,
-  } = useQuery({
-    queryKey: ["trendingCoins"],
-    queryFn: fetchTrendingCoins,
-    refetchOnWindowFocus: false,
-    refetchInterval: 1200000,
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-
+const Trending = ({coins}) => {
   return (
     <div className="flex flex-col pt-2 px-4  w-full dark:bg-dark-foreground bg-light-foreground rounded-md shadow-sm">
       <h1 className="text-xl font-bold text-gray-900 dark:text-light mb-3 text-center">
@@ -57,26 +25,26 @@ const Trending = () => {
                   className="my-1.5 w-8 h-8"
                 />
               </td>
-                          <td>
-                            <div
-                              className={`px-2 py-1 rounded-xl font-semibold flex items-center gap-2 w-fit ${
-                                coin.item.data.price_change_percentage_24h.usd < 0
-                                  ? "bg-red/20 text-red"
-                                  : "bg-green/20 text-green"
-                              }`}
-                            >
-                              <span>
-                                {coin.item.data.price_change_percentage_24h.usd < 0 ? (
-                                  <IoMdTrendingDown className="" />
-                                ) : (
-                                  <IoMdTrendingUp className="" />
-                                )}
-                              </span>
-                              <span>
-                                {coin.item.data.price_change_percentage_24h.usd.toFixed(1)}%
-                              </span>
-                            </div>
-                          </td>
+              <td>
+                <div
+                  className={`px-2 py-1 rounded-xl font-semibold flex items-center gap-2 w-fit ${
+                    coin.item.data.price_change_percentage_24h.usd < 0
+                      ? "bg-red/20 text-red"
+                      : "bg-green/20 text-green"
+                  }`}
+                >
+                  <span>
+                    {coin.item.data.price_change_percentage_24h.usd < 0 ? (
+                      <IoMdTrendingDown className="" />
+                    ) : (
+                      <IoMdTrendingUp className="" />
+                    )}
+                  </span>
+                  <span>
+                    {coin.item.data.price_change_percentage_24h.usd.toFixed(1)}%
+                  </span>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -84,7 +52,7 @@ const Trending = () => {
       <Link
         className="mx-auto my-3 w-fit bg-light text-dark dark:bg-gray-800 dark:border dark:border-light dark:text-light px-4 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
         to="/trending"
-        state={ coins }
+        state={coins}
       >
         View More
       </Link>

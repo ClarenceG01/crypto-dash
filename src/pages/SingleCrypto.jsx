@@ -1,6 +1,7 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Chart from "../components/Chart";
 import { useEffect, useState } from "react";
+import { IoIosArrowBack } from "react-icons/io";
 
 let USD = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -40,7 +41,14 @@ const SingleCrypto = () => {
 
   if (!coin) return <div>Loading...</div>;
   return (
-    <div className="bg-light dark:bg-dark min-h-screen py-3 px-5">
+    <div className="bg-light text-dark dark:bg-dark min-h-screen py-3 px-2 md:px-5">
+      <Link
+        to="/"
+        className="mb-4 flex items-center gap-2 text-gray-900 dark:text-light"
+      >
+        <IoIosArrowBack className="h-6 w-6" />
+        Back to Home
+      </Link>
       <div className="flex items-center gap-4 mb-4">
         <img src={coin.image} alt="" className="size-16 md:size-20" />
         <div className="flex flex-col">
@@ -64,7 +72,7 @@ const SingleCrypto = () => {
           <span>${coin.price_change_24h.toFixed(2)}</span>
         </div>
       </div>
-      <div className="mb-4">
+      <div className="mb-4 text-center">
         <p className="text-lg dark:text-light">
           {coin.name} to USD: 1 {coin.name} equals{" "}
           {USD.format(coin.current_price)}

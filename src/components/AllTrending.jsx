@@ -45,7 +45,7 @@ const AllTrending = () => {
               </div>
             </td>
             <td>
-              <span className="font-semibold dark:text-light">
+              <span className="font-semibold text-dark dark:text-light">
                 ${coin.item.data.price.toFixed(2)}
               </span>
             </td>

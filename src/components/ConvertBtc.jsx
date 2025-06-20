@@ -2,23 +2,18 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchExchangeRates = async () => {
-  try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/exchange_rates",
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "x-cg-demo-api-key": `${import.meta.env.VITE_API_KEY}`,
-        },
-      }
-    );
-    const data = await response.json();
-    return data.rates;
-  } catch (error) {
-    console.error("Error fetching exchange rates:", error);
-    throw error;
-  }
+  const response = await fetch(
+    "https://api.coingecko.com/api/v3/exchange_rates",
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": `${import.meta.env.VITE_API_KEY}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return data.rates;
 };
 const ConvertBtc = () => {
   const [btcAmount, setBtcAmount] = useState(1);
@@ -39,7 +34,6 @@ const ConvertBtc = () => {
     const convertedResult = rate * btcAmount;
     setResult(convertedResult);
   };
-
   return (
     <div className="flex flex-col py-2 px-4 w-full lg:w-1/3 dark:bg-dark-foreground text-dark  dark:text-light bg-light-foreground rounded-md shadow-sm">
       <h1 className="text-xl font-bold text-gray-900 dark:text-light mb-3 text-center">
@@ -80,12 +74,12 @@ const ConvertBtc = () => {
             <option value="eth">ETH</option>
           </select>
         </div>
-      <button
-        className="mt-4 mx-auto w-fit bg-[#FF7C04] text-white font-semibold rounded-md px-4 py-2 hover:bg-[#FF7C04]/90 transition-colors"
-        onClick={handleConvert}
-      >
-        Convert
-      </button>
+        <button
+          className="mt-4 mx-auto w-fit bg-[#FF7C04] text-white font-semibold rounded-md px-4 py-2 hover:bg-[#FF7C04]/90 transition-colors"
+          onClick={handleConvert}
+        >
+          Convert
+        </button>
       </div>
     </div>
   );
