@@ -11,7 +11,7 @@ A clean, real-time cryptocurrency dashboard built with modern web technologies, 
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
----
+- [Contributing](#contributing)
 
 ## Demo
 
@@ -60,7 +60,7 @@ Ensure you have installed:
 2. **Install dependencies**
    ```bash
    npm install
-# or yarn install
+  ## or yarn install
 
 3. **Configure environment variables**
    ```bash
@@ -68,8 +68,18 @@ Ensure you have installed:
 4. **Run the development server**
    ```bash
    npm run dev
-  # or yarn dev
+  ## or yarn dev
 5. **Open http://localhost:5173 to explore Crypto‑Dash**
+
+---
+## Contributing
+
+Contributions are welcomed. If you'd like to make changes:
+   - Fork or Clone the repo
+   - Create a feature branch. Name it according to the feature
+      e.g feature/add-dark-theme
+   - Make your changes
+   - Submit a PR for review
    
 
 
