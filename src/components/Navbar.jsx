@@ -27,7 +27,7 @@ const Navbar = () => {
         );
         const data = await response.json();
         setSearchResult(data.coins);
-      } catch (error) { 
+      } catch {
         setSearchResult([]);
       } finally {
         setLoading(false);
@@ -46,6 +46,9 @@ const Navbar = () => {
         <h1 className="text-lg text-gray-900 dark:text-gray-100 font-logo">
           CryptoDash
         </h1>
+      </Link>
+      <Link to="/watchlist" className="ml-6 text-base font-semibold text-primary-600 dark:text-primary-400 hover:underline">
+        Watchlist
       </Link>
       <div className="relative w-[150px] md:w-[250px] lg:w-[350px] flex items-center gap-2">
         <input
