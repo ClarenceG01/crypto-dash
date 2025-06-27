@@ -6,6 +6,7 @@
 // Import the functions you need from the Firebase SDKs
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 // TODO: Replace the following with your app's Firebase project configuration.
 // You can find this information in your Firebase project settings.
@@ -24,5 +25,8 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore database and export it
 export const db = getFirestore(app);
+
+// Initialize Firebase Authentication and export it
+export const auth = getAuth(app);
 
 // Now you can import { db } from '../utils/firebase' to use Firestore in your app. 

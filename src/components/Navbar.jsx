@@ -4,17 +4,18 @@ import { useThemeContext } from "../context/themeContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
+import { useAuth } from '../context/AuthContext';
+
 const Navbar = () => {
   const { darkTheme, setDarkTheme } = useThemeContext();
+  const { user, logout, loading } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState(false);
   const debouncedSearch = useDebounce(searchTerm);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
         const response = await fetch(
           `https://api.coingecko.com/api/v3/search?query=${debouncedSearch}`,
           {
@@ -29,8 +30,6 @@ const Navbar = () => {
         setSearchResult(data.coins);
       } catch {
         setSearchResult([]);
-      } finally {
-        setLoading(false);
       }
     };
     if (debouncedSearch) {
@@ -95,6 +94,24 @@ const Navbar = () => {
         )}
       </div>
       <div>
+        {/* Auth UI: Show login/signup if not logged in, else show user and logout */}
+        {!loading && !user && (
+          <>
+            <Link to="/login" className="ml-4 px-4 py-2 rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors">Login</Link>
+            <Link to="/signup" className="ml-2 px-4 py-2 rounded-md bg-gray-300 text-dark hover:bg-gray-400 transition-colors">Sign Up</Link>
+          </>
+        )}
+        {!loading && user && (
+          <div className="flex items-center gap-2 ml-4">
+            <span className="text-sm text-gray-700 dark:text-gray-200">{user.email}</span>
+            <button
+              onClick={logout}
+              className="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+            >
+              Logout
+            </button>
+          </div>
+        )}
         <button
           onClick={() => setDarkTheme(!darkTheme)}
           className="ml-4 p-2 rounded-md bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-300"

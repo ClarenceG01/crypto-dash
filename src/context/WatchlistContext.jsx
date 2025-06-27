@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
-import { db } from '../utils/firebase';
+import { db, auth } from '../utils/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 /**
  * React context for the watchlist feature.
@@ -22,9 +23,8 @@ export const WatchlistContext = createContext({
  * @param children React children to be rendered within the provider.
  */
 export function WatchlistProvider({ children }) {
-    // Mock userId for now; replace with real auth user id later
-    const userId = 'demoUser';
-
+    // State for the current user (null if not logged in)
+    const [user, setUser] = useState(null);
     // State for the list of cryptocurrency IDs in the watchlist.
     const [watchlist, setWatchlist] = useState(() => {
         // On initial mount, try to load the watchlist from localStorage.
@@ -37,15 +37,22 @@ export function WatchlistProvider({ children }) {
         }
     });
 
-    // Load watchlist from Firestore if user is logged in (mocked here)
+    // Listen for Firebase Auth state changes
     useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            setUser(firebaseUser);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    // Load watchlist from Firestore if user is logged in
+    useEffect(() => {
+        if (!user) return; // Only fetch from Firestore if logged in
         async function fetchFirestoreWatchlist() {
             try {
-                // Reference to the user's watchlist document in Firestore
-                const docRef = doc(db, 'watchlists', userId);
+                const docRef = doc(db, 'watchlists', user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    // If Firestore doc exists, use it
                     setWatchlist(docSnap.data().coins || []);
                 }
             } catch (e) {
@@ -53,23 +60,22 @@ export function WatchlistProvider({ children }) {
             }
         }
         fetchFirestoreWatchlist();
-    }, [userId]);
+    }, [user]);
 
-    // Whenever the watchlist changes, persist it to Firestore and localStorage
+    // Whenever the watchlist changes, persist it to Firestore (if logged in) and localStorage
     useEffect(() => {
-        // Save to localStorage for offline/guest use
         localStorage.setItem('watchlist', JSON.stringify(watchlist));
-        // Save to Firestore for logged-in users (mocked)
+        if (!user) return; // Only save to Firestore if logged in
         async function saveToFirestore() {
             try {
-                const docRef = doc(db, 'watchlists', userId);
+                const docRef = doc(db, 'watchlists', user.uid);
                 await setDoc(docRef, { coins: watchlist });
             } catch (e) {
                 console.error('Error saving watchlist to Firestore:', e);
             }
         }
         saveToFirestore();
-    }, [watchlist, userId]);
+    }, [watchlist, user]);
 
     // Add a cryptocurrency ID to the watchlist
     const addToWatchlist = (id) => {
@@ -85,7 +91,7 @@ export function WatchlistProvider({ children }) {
     const isInWatchlist = (id) => watchlist.includes(id);
 
     return (
-        <WatchlistContext.Provider value={{ watchlist, addToWatchlist, removeFromWatchlist, isInWatchlist }}>
+        <WatchlistContext.Provider value={{ watchlist, addToWatchlist, removeFromWatchlist, isInWatchlist, user }}>
             {children}
         </WatchlistContext.Provider>
     );
