@@ -30,7 +30,16 @@ export function AuthProvider({ children }) {
   // Listen for Firebase Auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
+      if (firebaseUser) {
+        // Create user object with email and displayName
+        const userData = {
+          email: firebaseUser.email,
+          displayName: firebaseUser.email?.split("@")[0] ?? "User",
+        };
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
     return () => unsubscribe();
