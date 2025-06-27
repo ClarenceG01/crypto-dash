@@ -49,14 +49,14 @@ export default function Login() {
         </div>
         <button 
           type="submit" 
-          className="w-full bg-primary-600 text-white py-3 rounded-md hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+          className="w-full bg-gray-700 text-white py-3 rounded-md hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
           disabled={loading}
         >
           {loading ? 'Logging in...' : 'Login'}
         </button>
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-600 dark:text-gray-400">Don't have an account? </span>
-          <Link to="/signup" className="text-primary-600 dark:text-primary-400 hover:underline font-medium">Sign Up</Link>
+          <Link to="/signup" className="text-blue-600 dark:text-blue-500 hover:underline font-medium">Sign Up</Link>
         </div>
       </form>
     </div>

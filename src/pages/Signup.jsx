@@ -49,14 +49,14 @@ export default function Signup() {
         </div>
         <button 
           type="submit" 
-          className="w-full bg-primary-600 text-white py-3 rounded-md hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+          className="w-full bg-gray-600 text-white py-3 rounded-md hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
           disabled={loading}
         >
           {loading ? 'Signing up...' : 'Sign Up'}
         </button>
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-600 dark:text-gray-400">Already have an account? </span>
-          <Link to="/login" className="text-primary-600 dark:text-primary-400 hover:underline font-medium">Login</Link>
+          <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Login</Link>
         </div>
       </form>
     </div>

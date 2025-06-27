@@ -40,21 +40,64 @@ const Navbar = () => {
   }, [debouncedSearch]);
 
   return (
-    <nav className="max-w-screen py-2 px-4 flex flex-col sm:flex-row items-center justify-between bg-light-foreground text-dark dark:bg-dark-foreground dark:text-light transition-colors duration-300 shadow-md gap-3 sm:gap-0">
-      {/* Logo and Watchlist Link */}
-      <div className="flex items-center gap-4 sm:gap-6">
-        <Link to="/">
-          <h1 className="text-lg text-gray-900 dark:text-gray-100 font-logo">
-            CryptoDash
-          </h1>
-        </Link>
-        <Link to="/watchlist" className="text-sm sm:text-base font-semibold text-primary-600 dark:text-primary-400 hover:underline">
-          Watchlist
-        </Link>
+    <nav className="max-w-screen py-2 px-4 flex flex-col bg-light-foreground text-dark dark:bg-dark-foreground dark:text-light transition-colors duration-300 shadow-md gap-3">
+      {/* First Row: Logo, Watchlist, Auth UI, and Theme Toggle */}
+      <div className="flex items-center justify-between">
+        {/* Left side: Logo and Watchlist */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          <Link to="/">
+            <h1 className="text-lg text-gray-900 dark:text-gray-100 font-logo">
+              CryptoDash
+            </h1>
+          </Link>
+          <Link to="/watchlist" className="text-sm sm:text-base font-semibold text-primary-600 dark:text-primary-400 hover:underline">
+            Watchlist
+          </Link>
+        </div>
+
+        {/* Right side: Auth UI and Theme Toggle */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          {/* Auth UI: Show login/signup if not logged in, else show user and logout */}
+          {!loading && !user && (
+            <div className="flex items-center gap-2">
+              <Link to="/login" className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors">Login</Link>
+              <Link to="/signup" className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm rounded-md bg-gray-300 text-dark hover:bg-gray-400 transition-colors">Sign Up</Link>
+            </div>
+          )}
+          {!loading && user && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-200">{user.displayName}</span>
+              <button
+                onClick={logout}
+                className="px-2 py-1 sm:px-3 sm:py-1 text-sm rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+          
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setDarkTheme(!darkTheme)}
+            className="p-2 rounded-md bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-300"
+          >
+            {darkTheme ? (
+              <MdLightMode
+                className="text-gray-900 dark:text-gray-100"
+                size={20}
+              />
+            ) : (
+              <MdDarkMode
+                className="text-gray-900 dark:text-gray-100"
+                size={20}
+              />
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="relative w-full sm:w-auto sm:flex-1 max-w-md mx-auto sm:mx-0">
+      {/* Second Row: Search Bar */}
+      <div className="relative w-full">
         <input
           type="search"
           value={searchTerm}
@@ -92,46 +135,6 @@ const Navbar = () => {
             </ul>
           </div>
         )}
-      </div>
-
-      {/* Auth UI and Theme Toggle */}
-      <div className="flex items-center gap-2 sm:gap-4">
-        {/* Auth UI: Show login/signup if not logged in, else show user and logout */}
-        {!loading && !user && (
-          <div className="flex items-center gap-2">
-            <Link to="/login" className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors">Login</Link>
-            <Link to="/signup" className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm rounded-md bg-gray-300 text-dark hover:bg-gray-400 transition-colors">Sign Up</Link>
-          </div>
-        )}
-        {!loading && user && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-200 hidden sm:block">{user.displayName}</span>
-            <button
-              onClick={logout}
-              className="px-2 py-1 sm:px-3 sm:py-1 text-sm rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
-        )}
-        
-        {/* Theme Toggle */}
-        <button
-          onClick={() => setDarkTheme(!darkTheme)}
-          className="p-2 rounded-md bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-300"
-        >
-          {darkTheme ? (
-            <MdLightMode
-              className="text-gray-900 dark:text-gray-100"
-              size={20}
-            />
-          ) : (
-            <MdDarkMode
-              className="text-gray-900 dark:text-gray-100"
-              size={20}
-            />
-          )}
-        </button>
       </div>
     </nav>
   );
