@@ -2,6 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import Chart from "../components/Chart";
 import { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
+import { useWatchlist } from "../hooks/useWatchlist";
 
 let USD = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -12,6 +15,7 @@ const SingleCrypto = () => {
   const [coin, setCoin] = useState(null);
   const { pathname } = useLocation();
   const id = pathname.split("/")[1];
+  const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
 
   const fetchCoin = async (id) => {
     try {
@@ -40,6 +44,7 @@ const SingleCrypto = () => {
   }, [id]);
 
   if (!coin) return <div>Loading...</div>;
+  const inWatchlist = isInWatchlist(coin.id);
   return (
     <div className="bg-light text-dark dark:bg-dark min-h-screen py-3 px-2 md:px-5">
       <Link
@@ -52,9 +57,24 @@ const SingleCrypto = () => {
       <div className="flex items-center gap-4 mb-4">
         <img src={coin.image} alt="" className="size-16 md:size-20" />
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold dark:text-light">
-            {coin.name} Price
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold dark:text-light">
+              {coin.name} Price
+            </h1>
+            <button
+              aria-label={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+              onClick={() =>
+                inWatchlist ? removeFromWatchlist(coin.id) : addToWatchlist(coin.id)
+              }
+              className="ml-2 focus:outline-none"
+            >
+              {inWatchlist ? (
+                <FaStar className="text-yellow-400 h-6 w-6" />
+              ) : (
+                <CiStar className="text-gray-400 h-6 w-6" />
+              )}
+            </button>
+          </div>
           <p className="uppercase dark:text-light">{coin.symbol}</p>
         </div>
         <div
